@@ -1,0 +1,133 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+  [ngClass]="{ 'bg-grey-dark': data.darkMode, 'bg-white': !data.darkMode }"
+  class="flex w-34.3 flex-col gap-2.4 rounded-lg p-3.2 sm:w-48"
+>
+  <h4
+    [ngClass]="{ 'text-white': data.darkMode, 'text-black': !data.darkMode }"
+    class="text-lg font-bold leading-lg"
+  >
+    {{ !!data.board.name ? "Edit Board" : "Add New Board" }}
+  </h4>
+  <div class="flex flex-col">
+    <h5
+      [ngClass]="{
+        'text-white': data.darkMode,
+        'text-grey-medium': !data.darkMode
+      }"
+      class="mb-0.8 text-sm font-bold leading-sm"
+    >
+      Board Name
+    </h5>
+    <div class="relative">
+      <input
+        id="name"
+        formControlName="name"
+        type="text"
+        placeholder="e.g Web Design"
+        [ngClass]="{
+          'text-white': data.darkMode,
+          'text-black': !data.darkMode,
+          'main-control-error':
+            form.get('name')?.dirty &&
+            form.get('name')?.touched &&
+            form.get('name')?.invalid &&
+            form.get('name')?.errors?.['required']
+        }"
+        class="main-control h-16"
+      />
+      <span
+        *ngIf="
+          form.get('name')?.dirty &&
+          form.get('name')?.touched &&
+          form.get('name')?.invalid &&
+          form.get('name')?.errors?.['required']
+        "
+        class="main-error"
+        >Can’t be empty</span
+      >
+    </div>
+  </div>
+  <div>
+    <h5
+      [ngClass]="{
+        'text-white': data.darkMode,
+        'text-grey-medium': !data.darkMode
+      }"
+      class="mb-0.8 text-sm font-bold leading-sm"
+    >
+      Board Columns
+    </h5>
+    <div class="flex flex-col gap-1.2" formArrayName="columns">
+      <div
+        *ngFor="let control of columnArray.controls; let i = index"
+        class="flex gap-1.6"
+      >
+        <div class="relative flex-1" formGroupName="{{ i }}">
+          <input
+            [id]="i"
+            type="text"
+            [ngClass]="{
+              'text-white': data.darkMode,
+              'text-black': !data.darkMode,
+              'main-control-error':
+                control.get('name')?.dirty &&
+                control.get('name')?.touched &&
+                control.get('name')?.invalid &&
+                control.get('name')?.errors?.['required']
+            }"
+            class="main-control h-16"
+            formControlName="name"
+          />
+          <span
+            *ngIf="
+              control.get('name')?.dirty &&
+              control.get('name')?.touched &&
+              control.get('name')?.invalid &&
+              control.get('name')?.errors?.['required']
+            "
+            class="main-error"
+            >Can’t be empty</span
+          >
+        </div>
+
+        <button
+          type="button"
+          class="marker"
+          *ngIf="i !== 0"
+          (click)="removeColumn(i)"
+        >
+          <img
+            src="assets/images/icon-cross.svg"
+            alt="remove"
+            class="idle h-6 w-6"
+          />
+          <img
+            src="assets/images/icon-cross-hover.svg"
+            alt="remove"
+            class="cover h-6 w-6"
+          />
+        </button>
+      </div>
+      <button
+        type="button"
+        (click)="addColumn()"
+        [ngClass]="{
+          'btn-secondary-dark': data.darkMode,
+          'btn-secondary': !data.darkMode
+        }"
+        class="btn btn-sm"
+      >
+        + Add New Column
+      </button>
+    </div>
+  </div>
+  <button
+    [disabled]="form.invalid"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >
+    {{ !!data.board.name ? "Save Changes" : "Create New Board" }}
+  </button>
+</form>
