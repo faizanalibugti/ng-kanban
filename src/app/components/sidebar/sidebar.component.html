@@ -1,0 +1,95 @@
+<aside
+  [ngClass]="{ 'w-0': !opened, 'lg:w-[30rem]': opened, 'sm:w-[26rem]': opened }"
+  class="full fixed z-10 hidden h-screen flex-col border-r border-lines-light bg-white py-3.2 duration-700 dark:border-lines-dark dark:bg-grey-dark sm:flex"
+>
+  <figure
+    class="mb-[5.4rem] sm:pl-2.4 lg:pl-3.2"
+    [ngClass]="{ hidden: !opened }"
+  >
+    <img
+      src="assets/images/logo-dark.svg"
+      alt="logo"
+      class="h-10 w-60 dark:hidden"
+    />
+    <img
+      src="assets/images/logo-light.svg"
+      alt="logo"
+      class="hidden h-10 w-60 dark:block"
+    />
+  </figure>
+  <div
+    class="mb-auto flex flex-col sm:w-96 lg:w-[27.6rem]"
+    [ngClass]="{ hidden: !opened }"
+  >
+    <h2
+      class="mb-8 text-sm font-bold uppercase leading-sm tracking-sm text-grey-medium sm:pl-2.4 lg:pl-3.2"
+    >
+      All boards ({{ boards.length }})
+    </h2>
+    <ng-container *ngFor="let board of boards; let i = index">
+      <button
+        *ngIf="board.name === activeBoard?.name"
+        class="flex h-4.8 items-center rounded-r-full bg-purple text-white sm:pl-2.4 lg:pl-3.2"
+      >
+        <img
+          src="assets/images/icon-board-active.svg"
+          alt="board"
+          class="mr-1.2 h-1.6 w-1.6 lg:mr-1.6"
+        />
+        <span class="text-md font-bold leading-md">{{ board.name }}</span>
+      </button>
+      <button
+        *ngIf="!(board.name === activeBoard?.name)"
+        (click)="selectBoard(i)"
+        class="marker flex h-4.8 items-center rounded-r-full text-grey-medium hover:bg-purple-low hover:text-purple dark:hover:bg-white sm:pl-2.4 lg:pl-3.2"
+      >
+        <img
+          src="assets/images/icon-board.svg"
+          alt="board"
+          class="idle mr-1.2 h-1.6 w-1.6 lg:mr-1.6"
+        />
+        <img
+          src="assets/images/icon-board-new.svg"
+          alt="board"
+          class="cover mr-1.2 h-1.6 w-1.6 lg:mr-1.6"
+        />
+        <span class="text-md font-bold leading-md">{{ board.name }}</span>
+      </button>
+    </ng-container>
+    <button
+      (click)="addBoard()"
+      class="flex h-4.8 items-center rounded-r-full hover:bg-purple-low dark:hover:bg-white sm:pl-2.4 lg:pl-3.2"
+    >
+      <img
+        src="assets/images/icon-board-new.svg"
+        alt="board"
+        class="mr-1.2 h-1.6 w-1.6 lg:mr-1.6"
+      />
+      <span class="text-md font-bold leading-md text-purple"
+        >+ Create New Board</span
+      >
+    </button>
+  </div>
+  <div class="mb-3 sm:pl-5 lg:pl-2.4" [ngClass]="{ hidden: !opened }">
+    <app-theme-toggler
+      (enableDarkMode)="enableDarkMode.emit($event)"
+    ></app-theme-toggler>
+  </div>
+  <button
+    [ngClass]="{ hidden: !opened }"
+    (click)="collapseSidebar()"
+    class="marker flex h-4.8 items-center rounded-r-full text-grey-medium hover:bg-purple-low hover:text-purple dark:hover:bg-white sm:w-96 sm:pl-2.4 lg:w-[27.6rem] lg:pl-3.2"
+  >
+    <img
+      src="assets/images/icon-hide-sidebar.svg"
+      alt="hide"
+      class="idle mr-1.2 h-1.6 w-1.6 lg:mr-1.6"
+    />
+    <img
+      src="assets/images/icon-hide-sidebar-hover.svg"
+      alt="hide"
+      class="cover mr-1.2 h-1.6 w-1.6 lg:mr-1.6"
+    />
+    <span class="text-md font-bold leading-md">Hide Sidebar</span>
+  </button>
+</aside>

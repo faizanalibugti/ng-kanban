@@ -1,0 +1,21 @@
+<ng-container *ngIf="darkModeValueChanges | async"></ng-container>
+
+<div
+  class="flex h-4.8 items-center justify-center rounded-lg bg-grey-light dark:bg-grey-vdark sm:w-[23.5rem] lg:w-[25.1rem]"
+>
+  <img src="assets/images/icon-light-theme.svg" class="h-6 w-6" alt="light" />
+  <div class="toggle mx-[2.367rem] flex">
+    <input
+      type="checkbox"
+      [formControl]="toggleDarkMode"
+      name="switch"
+      id="switch"
+      class="invisible absolute h-0 w-0"
+    />
+    <label
+      for="switch"
+      class="relative h-8 w-16 cursor-pointer rounded-2xl bg-purple p-1 hover:bg-purple-light"
+    ></label>
+  </div>
+  <img src="assets/images/icon-dark-theme.svg" class="h-6 w-6" alt="dark" />
+</div>
