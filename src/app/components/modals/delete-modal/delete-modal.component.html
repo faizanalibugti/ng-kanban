@@ -1,0 +1,33 @@
+<div
+  [ngClass]="{ 'bg-grey-dark': data.darkMode, 'bg-white': !data.darkMode }"
+  class="flex w-34.3 flex-col gap-2.4 rounded-lg p-3.2 sm:w-48"
+>
+  <h4 class="text-lg font-bold leading-lg text-red">
+    Delete this {{ data.isBoard ? "board" : "task" }}?
+  </h4>
+  <p class="text-ms font-medium leading-ms text-grey-medium">
+    <span *ngIf="data.isBoard">
+      Are you sure you want to delete the ‘{{ data.name }}’ board? This action
+      will remove all columns and tasks and cannot be reversed.
+    </span>
+    <span *ngIf="!data.isBoard">
+      Are you sure you want to delete the ‘{{ data.name }}’ task and its
+      subtasks? This action cannot be reversed.
+    </span>
+  </p>
+  <div class="flex h-[9.6rem] flex-col gap-1.6 sm:h-auto sm:flex-row">
+    <button (click)="remove()" class="btn btn-sm btn-destructive flex-1">
+      Delete
+    </button>
+    <button
+      (click)="cancel()"
+      [ngClass]="{
+        'btn-secondary-dark': data.darkMode,
+        'btn-secondary': !data.darkMode
+      }"
+      class="btn btn-sm flex-1"
+    >
+      Cancel
+    </button>
+  </div>
+</div>
