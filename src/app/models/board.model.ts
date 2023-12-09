@@ -1,6 +1,6 @@
-import { Column } from "./column.model";
+import { Column } from './column.model';
 
 export interface Board {
-    name: string;
-    columns: Column[]
+  name: string;
+  columns: Column[];
 }
