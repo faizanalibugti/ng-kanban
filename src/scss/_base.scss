@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply flex items-center justify-center font-bold focus:outline-none disabled:opacity-25;
+  }
+  .btn-primary {
+    @apply btn bg-purple text-white hover:bg-purple-light;
+  }
+  .btn-secondary {
+    @apply btn bg-purple-low text-purple hover:bg-purple-medium;
+  }
+  .btn-secondary-dark {
+    @apply btn bg-white text-purple;
+  }
+  .btn-destructive {
+    @apply btn bg-red text-white hover:bg-red-light;
+  }
+
+  .btn-lg {
+    @apply h-4.8 rounded-2.4 text-md leading-md;
+  }
+
+  .btn-sm {
+    @apply p-4 rounded-2 text-ms leading-ms;
+  }
+
+  .btn-mb {
+    @apply h-3.2 rounded-2.4;
+  }
+
+  .main-control {
+    @apply h-16 w-full cursor-pointer rounded-md border-grey-medium/25 bg-transparent px-1.6 text-ms font-medium leading-ms placeholder:opacity-25 focus:border-purple focus:ring-transparent focus:ring-offset-0;
+  }
+
+  .main-control-error {
+    @apply border-red focus:border-red;
+  }
+
+  .main-error {
+    @apply absolute right-1.6 top-0.8 text-ms font-medium leading-ms text-red;
+  }
+
+  .modal {
+    @apply flex max-h-[80vh] w-34.3 flex-col gap-2.4 overflow-auto rounded-lg px-2.4 pb-3.2 pt-2.4 sm:w-48 sm:p-3.2;
+
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+    }
+  }
+}
+
+@import "mixins";
+
+html,
+body {
+  font-family: $font-jakarta;
+  font-size: $fs-10;
+
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+}
+
+.mat-mdc-dialog-container {
+  padding: 0 !important;
+  background: transparent;
+  border-radius: 0.75rem;
+}
+
+.mat-mdc-dialog-surface {
+  border-radius: 0.5rem;
+  background: transparent;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+}
+
+.menu + .cdk-overlay-connected-position-bounding-box {
+  .mat-mdc-menu-panel {
+    background: transparent;
+    box-shadow: 0 10px 20px rgba(54, 78, 126, 0.25);
+    margin-top: 2.2rem;
+  }
+}
+
+.mobile-menu + .cdk-overlay-connected-position-bounding-box {
+  @include mobile-wide {
+    left: 5.4rem !important;
+  }
+  .mat-menu-panel {
+    @include mobile-wide {
+      margin-top: 5rem;
+    }
+  }
+}
+
+.menu-left + .cdk-overlay-connected-position-bounding-box {
+  .mat-menu-panel {
+    margin-top: 2.2rem;
+    margin-left: -9rem;
+  }
+}
+
+.drop + .cdk-overlay-connected-position-bounding-box {
+  .mat-menu-panel {
+    margin-top: 0.8rem;
+  }
+}
+
+.mat-mdc-menu-panel {
+  background-color: transparent;
+  max-width: fit-content !important;
+  min-height: fit-content !important;
+}
+
+.mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.marker {
+  .cover {
+    display: none;
+  }
+  &:hover {
+    .idle {
+      display: none;
+    }
+    .cover {
+      display: block;
+    }
+  }
+}
+
+.toggle {
+  label::after {
+    position: absolute;
+    content: "";
+    height: 1.4rem;
+    width: 1.4rem;
+    top: 0.3rem;
+    background-color: $white;
+    border-radius: 50%;
+    transition: 0.5s;
+  }
+
+  input[type="checkbox"]:checked + label,
+  .move {
+    &::after {
+      transform: translateX(150%);
+    }
+  }
+}
+
+@include desktop {
+  body,
+  html {
+    font-size: $fs-8s;
+  }
+}
+
+@include tablet-wide {
+  body,
+  html {
+    font-size: $fs-10s;
+  }
+}
+
+@include tablet {
+  body,
+  html {
+    font-size: $fs-10;
+  }
+}
+
+@include mobile-wide {
+  body,
+  html {
+    font-size: $fs-11s;
+  }
+
+  .cdk-overlay-pane {
+    max-width: initial !important;
+  }
+}
+
+@include mobile {
+  body,
+  html {
+    font-size: $fs-10;
+  }
+}
