@@ -44,21 +44,21 @@ Level up! Drag and drop tasks like a gaming pro. Change status, reorder - it's y
 ## Getting Started 🚀
 
 1. **Clone the Repository:**
-   
-    ```bash
-    git clone https://github.com/faizanalibugti/ng-kanban.git
-    ```
 
-2. **Install Dependencies:**  
+   ```bash
+   git clone https://github.com/faizanalibugti/ng-kanban.git
+   ```
 
-    ```bash
-    cd ng-kanban
-    npm install
-    ```
+2. **Install Dependencies:**
+
+   ```bash
+   cd ng-kanban
+   npm install
+   ```
 
 3. **Run the App:**
 
-    Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+   Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Contributions 🤝
 

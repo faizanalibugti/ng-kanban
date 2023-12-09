@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:ng-kanban": "node dist/ng-kanban/server/server.mjs",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "format": "npx prettier --write ."
   },
   "private": true,
   "dependencies": {
