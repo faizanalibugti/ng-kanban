@@ -1,0 +1,170 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+  [ngClass]="{ 'bg-grey-dark': data.darkMode, 'bg-white': !data.darkMode }"
+  class="modal"
+>
+  <h4
+    [ngClass]="{ 'text-white': data.darkMode, 'text-black': !data.darkMode }"
+    class="text-lg font-bold leading-lg"
+  >
+    {{ data.editMode ? "Edit Task" : "Add New Task" }}
+  </h4>
+  <div class="flex flex-col">
+    <h5
+      [ngClass]="{
+        'text-white': data.darkMode,
+        'text-grey-medium': !data.darkMode
+      }"
+      class="mb-0.8 text-sm font-bold leading-sm"
+    >
+      Title
+    </h5>
+    <div class="relative">
+      <input
+        id="title"
+        formControlName="title"
+        type="text"
+        placeholder="e.g Take coffee break"
+        [ngClass]="{
+          'text-white': data.darkMode,
+          'text-black': !data.darkMode,
+          'main-control-error':
+            form.get('title')?.dirty &&
+            form.get('title')?.touched &&
+            form.get('title')?.invalid &&
+            form.get('title')?.errors?.['required']
+        }"
+        class="main-control h-16"
+      />
+      <span
+        *ngIf="
+          form.get('title')?.dirty &&
+          form.get('title')?.touched &&
+          form.get('title')?.invalid &&
+          form.get('title')?.errors?.['required']
+        "
+        class="main-error"
+        >Can’t be empty</span
+      >
+    </div>
+  </div>
+  <div class="flex flex-col">
+    <h5
+      [ngClass]="{
+        'text-white': data.darkMode,
+        'text-grey-medium': !data.darkMode
+      }"
+      class="mb-0.8 text-sm font-bold leading-sm"
+    >
+      Description
+    </h5>
+    <textarea
+      id="description"
+      formControlName="description"
+      [ngClass]="{ 'text-white': data.darkMode, 'text-black': !data.darkMode }"
+      placeholder="e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little."
+      class="main-control h-[11.2rem] resize-none"
+    >
+    </textarea>
+  </div>
+  <div>
+    <h5
+      [ngClass]="{
+        'text-white': data.darkMode,
+        'text-grey-medium': !data.darkMode
+      }"
+      class="mb-0.8 text-sm font-bold leading-sm"
+    >
+      Subtasks
+    </h5>
+    <div class="flex flex-col gap-1.2" formArrayName="subtasks">
+      <div
+        *ngFor="let control of subTaskArray.controls; let i = index"
+        class="flex gap-1.6"
+      >
+        <div class="relative flex-1" formGroupName="{{ i }}">
+          <input
+            [id]="i"
+            type="text"
+            [ngClass]="{
+              'text-white': data.darkMode,
+              'text-black': !data.darkMode,
+              'main-control-error':
+                control.get('title')?.dirty &&
+                control.get('title')?.touched &&
+                control.get('title')?.invalid &&
+                control.get('title')?.errors?.['required']
+            }"
+            class="main-control h-16"
+            formControlName="title"
+          />
+          <span
+            *ngIf="
+              control.get('title')?.dirty &&
+              control.get('title')?.touched &&
+              control.get('title')?.invalid &&
+              control.get('title')?.errors?.['required']
+            "
+            class="main-error"
+            >Can’t be empty</span
+          >
+        </div>
+
+        <button type="button" class="marker" (click)="removeSubtask(i)">
+          <img
+            src="assets/images/icon-cross.svg"
+            alt="remove"
+            class="idle h-6 w-6"
+          />
+          <img
+            src="assets/images/icon-cross-hover.svg"
+            alt="remove"
+            class="cover h-6 w-6"
+          />
+        </button>
+      </div>
+      <button
+        type="button"
+        (click)="addSubtask()"
+        [ngClass]="{
+          'btn-secondary-dark': data.darkMode,
+          'btn-secondary': !data.darkMode
+        }"
+        class="btn btn-sm"
+      >
+        + Add New Subtask
+      </button>
+    </div>
+  </div>
+  <div>
+    <h5
+      [ngClass]="{
+        'text-white': data.darkMode,
+        'text-grey-medium': !data.darkMode
+      }"
+      class="mb-1.6 text-sm font-bold leading-sm"
+    >
+      Current Status
+    </h5>
+    <select
+      class="bg-gray-50 border-gray-300 text-gray-900 block w-full rounded-lg border px-2 py-4 text-sm"
+      [ngClass]="{
+        'bg-grey-vdark text-white': data.darkMode,
+        'bg-white': !data.darkMode
+      }"
+      formControlName="status"
+    >
+      <option [value]="column.name" *ngFor="let column of data.columns">
+        {{ column.name }}
+      </option>
+    </select>
+  </div>
+  <button
+    [disabled]="form.invalid"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >
+    {{ data.editMode ? "Save Changes" : "Create Task" }}
+  </button>
+</form>
