@@ -1,0 +1,199 @@
+<nav
+  class="fixed z-50 hidden w-[-webkit-fill-available] border-b border-lines-light bg-white dark:border-lines-dark dark:bg-grey-dark sm:flex sm:h-[8rem] lg:h-[9.7rem]"
+>
+  <figure
+    class="flex w-[21rem] items-center border-r border-lines-light px-2.4 dark:border-lines-dark"
+    [ngClass]="{ hidden: opened }"
+  >
+    <img
+      src="assets/images/logo-dark.svg"
+      alt="logo"
+      class="h-10 w-60 dark:hidden"
+    />
+    <img
+      src="assets/images/logo-light.svg"
+      alt="logo"
+      class="hidden h-10 w-60 dark:block"
+    />
+  </figure>
+  <header class="flex flex-1 items-start sm:px-2.4 lg:px-3.2">
+    <h1
+      class="mr-auto flex-1 font-bold text-black dark:text-white sm:pt-[2.8rem] sm:text-lx sm:leading-lx lg:pt-[2.9rem] lg:text-xl lg:leading-xl"
+    >
+      {{ activeBoard?.name }}
+    </h1>
+    <div class="flex gap-2.4 sm:pt-1.6 lg:pt-8">
+      <button
+        [disabled]="!activeBoard?.columns?.length"
+        (click)="addTask()"
+        class="btn-primary btn-lg w-[16.4rem]"
+      >
+        + Add New Task
+      </button>
+      <button
+        [disabled]="!activeBoard?.name"
+        [matMenuTriggerFor]="menu"
+        class="self-center"
+      >
+        <img
+          src="assets/images/icon-vertical-ellipsis.svg"
+          alt="options"
+          class="h-8 w-2"
+        />
+      </button>
+    </div>
+  </header>
+</nav>
+
+<nav
+  class="fixed flex h-[6.4rem] w-[-webkit-fill-available] items-center border-b border-lines-light bg-white px-1.6 dark:border-lines-dark dark:bg-grey-dark sm:hidden"
+>
+  <figure class="mr-1.6 h-10 w-2.4">
+    <img src="assets/images/logo-mobile.svg" alt="logo" />
+  </figure>
+  <h1
+    class="board-name mr-0.8 text-lg font-bold leading-lg text-black dark:text-white"
+  >
+    {{ activeBoard?.name }}
+  </h1>
+  <button
+    type="button"
+    [matMenuTriggerFor]="sidebar"
+    class="mr-auto pt-2"
+    (menuClosed)="close()"
+    (menuOpened)="open()"
+  >
+    <img
+      src="assets/images/icon-chevron-down.svg"
+      alt="arrow-down"
+      *ngIf="!sidebarShown"
+    />
+    <img
+      src="assets/images/icon-chevron-up.svg"
+      alt="arrow-up"
+      *ngIf="sidebarShown"
+    />
+  </button>
+  <button
+    [disabled]="!activeBoard?.columns?.length"
+    (click)="addTask()"
+    class="btn-primary btn-mb w-4.8"
+  >
+    <img src="assets/images/icon-add-task-mobile.svg" alt="add" />
+  </button>
+  <button [disabled]="!activeBoard?.name" [matMenuTriggerFor]="menu">
+    <img
+      src="assets/images/icon-vertical-ellipsis.svg"
+      alt="options"
+      class="ml-1.6 h-1.6 w-[0.369rem]"
+    />
+  </button>
+</nav>
+
+<mat-menu #menu="matMenu" class="board-options" [backdropClass]="'menu'">
+  <div
+    [ngClass]="{ 'bg-grey-vdark': darkMode, 'bg-white': !darkMode }"
+    class="flex w-[19.2rem] flex-col gap-1.6 rounded-xl p-1.6"
+  >
+    <button
+      (click)="editBoard()"
+      class="text-left text-ms font-medium leading-ms text-grey-medium"
+    >
+      Edit Board
+    </button>
+    <button
+      (click)="deleteBoard()"
+      class="text-left text-ms font-medium leading-ms text-red"
+    >
+      Delete Board
+    </button>
+  </div>
+</mat-menu>
+
+<mat-menu #sidebar="matMenu" [backdropClass]="'mobile-menu'">
+  <div
+    [ngClass]="{ 'bg-grey-dark': darkMode, 'bg-white': !darkMode }"
+    class="flex w-[26.4rem] flex-col gap-1.6 rounded-xl py-1.6"
+  >
+    <div class="flex w-96 flex-col">
+      <h2
+        class="mb-8 pl-2.4 text-sm font-bold uppercase leading-sm tracking-sm text-grey-medium"
+      >
+        All boards ({{ boards.length }})
+      </h2>
+      <ng-container *ngFor="let board of boards; let i = index">
+        <button
+          *ngIf="board.name === activeBoard?.name"
+          class="flex h-4.8 items-center rounded-r-full bg-purple pl-2.4 text-white"
+        >
+          <img
+            src="assets/images/icon-board-active.svg"
+            alt="board"
+            class="mr-1.2 h-1.6 w-1.6"
+          />
+          <span class="text-md font-bold leading-md">{{ board.name }}</span>
+        </button>
+        <button
+          *ngIf="!(board.name === activeBoard?.name)"
+          (click)="selectBoard(i)"
+          class="marker flex h-4.8 items-center rounded-r-full pl-2.4 text-grey-medium hover:bg-purple-low hover:text-purple dark:hover:bg-white"
+        >
+          <img
+            src="assets/images/icon-board.svg"
+            alt="board"
+            class="idle mr-1.2 h-1.6 w-1.6"
+          />
+          <img
+            src="assets/images/icon-board-new.svg"
+            alt="board"
+            class="cover mr-1.2 h-1.6 w-1.6"
+          />
+          <span class="text-md font-bold leading-md">{{ board.name }}</span>
+        </button>
+      </ng-container>
+      <button
+        (click)="addBoard()"
+        class="flex h-4.8 items-center rounded-r-full pl-2.4 hover:bg-purple-low dark:hover:bg-white"
+      >
+        <img
+          src="assets/images/icon-board-new.svg"
+          alt="board"
+          class="mr-1.2 h-1.6 w-1.6"
+        />
+        <span class="text-md font-bold leading-md text-purple"
+          >+ Create New Board</span
+        >
+      </button>
+    </div>
+    <div class="pl-1.6">
+      <div
+        [ngClass]="{ 'bg-grey-light': !darkMode, 'bg-grey-vdark': darkMode }"
+        class="flex h-4.8 w-[23.5rem] items-center justify-center rounded-lg"
+      >
+        <img
+          src="assets/images/icon-light-theme.svg"
+          class="h-6 w-6"
+          alt="light"
+        />
+        <div
+          role="button"
+          aria-disabled="true"
+          (click)="stopPropagation($event)"
+          (keyup)="stopPropagation($event)"
+          class="toggle mx-[2.367rem] flex"
+        >
+          <label
+            for="switch"
+            [ngClass]="{ move: darkMode }"
+            class="relative h-8 w-16 cursor-pointer rounded-2xl bg-purple p-1 hover:bg-purple-light"
+          ></label>
+        </div>
+        <img
+          src="assets/images/icon-dark-theme.svg"
+          class="h-6 w-6"
+          alt="dark"
+        />
+      </div>
+    </div>
+  </div>
+</mat-menu>
