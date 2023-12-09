@@ -1,5 +1,3 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/29288499-c21e-4b77-b3f6-d15dbb26c399/deploy-status)](https://app.netlify.com/sites/jocular-buttercream-43ff70/deploys)
-
 # Kanban Task Management Web App 🚀
 
 Welcome to our Kanban Task Management web app, a powerhouse built with Angular version 17.0.5 and styled with the magic of Tailwind CSS. 🎨 This app is your ticket to organizing tasks with flair!
