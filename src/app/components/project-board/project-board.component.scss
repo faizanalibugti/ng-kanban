@@ -1,0 +1,17 @@
+.board-container {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+
+  .drag-handle {
+    position: absolute;
+    background-color: transparent;
+    cursor: move;
+    right: 0;
+    padding: 5px;
+    top: 5px;
+  }
+}

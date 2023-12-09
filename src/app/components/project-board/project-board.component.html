@@ -1,0 +1,87 @@
+<div
+  class="board-container board mt-24 h-screen overflow-auto whitespace-nowrap bg-grey-light px-1.6 py-2.4 dark:bg-grey-vdark sm:mt-32 sm:px-2.4 lg:mt-36"
+>
+  <ng-container *ngIf="activeBoard?.columns?.length; else emptyProjectBoard">
+    <div class="inline-block" cdkDropListGroup>
+      <div
+        *ngFor="let column of activeBoard?.columns; let i = index"
+        class="mr-2.4 inline-block w-[28rem] whitespace-normal"
+      >
+        <div class="flex flex-col">
+          <h3
+            class="mb-2.4 flex items-center text-sm font-bold uppercase leading-sm tracking-sm text-grey-medium"
+          >
+            <span
+              [ngStyle]="{ background: colors[i % colors.length] }"
+              class="mr-1.2 h-6 w-6 rounded-full"
+            ></span>
+            <span>{{ column?.name }} ({{ column?.tasks?.length || 0 }})</span>
+          </h3>
+          <ng-container *ngIf="column.tasks">
+            <div
+              cdkDropList
+              [cdkDropListData]="column.tasks"
+              (cdkDropListDropped)="drop($event)"
+              class="flex min-h-[500px] flex-col gap-8"
+              [ngClass]="{
+                'rounded-md outline-dashed outline-2 outline-purple-medium':
+                  column?.tasks?.length === 0
+              }"
+            >
+              <app-task-card
+                cdkDrag
+                [cdkDragData]="task"
+                (click)="viewTask(task)"
+                (keyup.enter)="viewTask(task)"
+                [task]="task"
+                *ngFor="let task of column.tasks"
+              >
+                <div class="drag-handle" cdkDragHandle>
+                  <svg width="24px" fill="#828fa3" viewBox="0 0 24 24">
+                    <path
+                      d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+                    ></path>
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                  </svg>
+                </div>
+              </app-task-card>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="mr-2.4 inline-block h-[80vh] w-[28rem]">
+      <div class="flex h-full flex-col rounded-md">
+        <div class="mb-2.4 h-6"></div>
+        <div
+          class="flex flex-1 justify-center rounded-lg"
+          [ngClass]="{ 'card-dark': darkMode, 'card-light': !darkMode }"
+        >
+          <button
+            (click)="addColumn()"
+            (keyup.enter)="addColumn()"
+            class="self-center text-xl font-bold leading-xl text-grey-medium hover:text-purple"
+          >
+            + New Column
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #emptyProjectBoard>
+  <div class="flex h-full flex-col items-center justify-center">
+    <h3
+      class="mb-3.2 text-center text-lg font-bold leading-lg text-grey-medium"
+    >
+      This board is empty. Create a new <br class="sm:hidden" />column
+      <br class="hidden sm:block lg:hidden" />
+      to get started.
+    </h3>
+    <button (click)="addColumn()" class="btn-primary btn-lg w-[17.4rem]">
+      + Add New Column
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,13 @@
+<div
+  class="relative cursor-pointer rounded-xl bg-white px-1.6 py-[2.3rem] text-black shadow-md hover:text-purple dark:bg-grey-dark dark:text-white hover:dark:text-purple"
+  tabindex="0"
+>
+  <ng-content></ng-content>
+  <h2 class="mb-3 w-96 text-md font-bold leading-md">
+    {{ task.title }}
+  </h2>
+  <p class="text-sm font-bold leading-sm text-grey-medium">
+    {{ calculateCompleted(task.subtasks) }} of
+    {{ task.subtasks.length }} subtask{{ task.subtasks.length > 1 ? "s" : "" }}
+  </p>
+</div>
