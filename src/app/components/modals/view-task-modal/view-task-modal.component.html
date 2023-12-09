@@ -1,0 +1,114 @@
+<div
+  [ngClass]="{ 'bg-grey-dark': data.darkMode, 'bg-white': !data.darkMode }"
+  class="modal"
+>
+  <div class="flex gap-2.4">
+    <h4
+      [ngClass]="{ 'text-white': data.darkMode, 'text-black': !data.darkMode }"
+      class="flex-1 text-lg font-bold leading-lg"
+    >
+      {{ data.task.title }}
+    </h4>
+    <button class="self-center outline-none" [matMenuTriggerFor]="menu">
+      <img
+        src="assets/images/icon-vertical-ellipsis.svg"
+        alt="options"
+        class="h-8 w-2"
+      />
+    </button>
+    <mat-menu #menu="matMenu" [backdropClass]="'menu-left'">
+      <div
+        [ngClass]="{
+          'bg-grey-vdark': data.darkMode,
+          'bg-white': !data.darkMode
+        }"
+        class="flex w-[19.2rem] flex-col gap-1.6 rounded-xl p-1.6"
+      >
+        <button
+          (click)="editTask()"
+          class="text-left text-ms font-medium leading-ms text-grey-medium"
+        >
+          Edit Task
+        </button>
+        <button
+          (click)="deleteTask()"
+          class="text-left text-ms font-medium leading-ms text-red"
+        >
+          Delete Task
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+  <p
+    *ngIf="data.task.description"
+    class="text-ms font-medium leading-ms text-grey-medium"
+  >
+    {{ data.task.description }}
+  </p>
+  <div>
+    <h5
+      [ngClass]="{
+        'text-white': data.darkMode,
+        'text-grey-medium': !data.darkMode
+      }"
+      class="mb-1.6 text-sm font-bold leading-sm"
+    >
+      Subtasks ({{ calculateCompleted(data.task.subtasks) }} of
+      {{ data.task.subtasks.length }})
+    </h5>
+    <div class="flex flex-col gap-3">
+      <button
+        (click)="updateSubtask(subtask)"
+        [ngClass]="{
+          'bg-grey-vdark': data.darkMode,
+          'bg-grey-light': !data.darkMode
+        }"
+        *ngFor="let subtask of data.task.subtasks"
+        class="flex items-center gap-1.6 rounded-md p-1.2 hover:bg-purple/25"
+      >
+        <input
+          [checked]="subtask.isCompleted"
+          [ngClass]="{ 'bg-grey-dark': data.darkMode }"
+          type="checkbox"
+          class="h-1.6 w-1.6 rounded border-grey-medium/25 checked:text-purple focus:ring-transparent focus:ring-offset-0"
+        />
+        <span
+          [ngClass]="{
+            'text-white': data.darkMode,
+            'text-black': !data.darkMode,
+            'line-through': subtask.isCompleted,
+            'opacity-50': subtask.isCompleted
+          }"
+          class="text-left text-sm font-bold leading-sm"
+        >
+          {{ subtask.title }}
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-8 flex flex-col space-y-3">
+    <h5
+      [ngClass]="{
+        'text-white': data.darkMode,
+        'text-grey-medium': !data.darkMode
+      }"
+      class="mb-1.6 text-sm font-bold leading-sm"
+    >
+      Current Status
+    </h5>
+    <select
+      class="bg-gray-50 border-gray-300 text-gray-900 block w-full rounded-lg border px-2 py-4 text-sm"
+      [ngClass]="{
+        'bg-grey-vdark text-white': data.darkMode,
+        'bg-white': !data.darkMode
+      }"
+      [(ngModel)]="activeStatus.name"
+      (change)="updateStatus($event)"
+    >
+      <option [value]="column.name" *ngFor="let column of data.columns">
+        {{ column.name }}
+      </option>
+    </select>
+  </div>
+</div>
