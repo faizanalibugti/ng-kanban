@@ -47,7 +47,7 @@ export class BoardModalComponent implements OnInit {
       ]),
     });
 
-    if (this.data.board?.columns.length > 0) {
+    if (this.data.board?.columns?.length > 0) {
       this.columnArray.clear();
       this.data.board.columns.forEach((column) => this.addColumn(column.name));
     }
