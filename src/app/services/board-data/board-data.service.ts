@@ -1,4 +1,12 @@
-import { Injectable, computed, effect, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+  computed,
+  effect,
+  signal,
+} from '@angular/core';
 import { Board } from '../../models/board.model';
 import { Task } from '../../models/task.model';
 import { BoardHttpService } from '../board-http/board-http.service';
@@ -15,16 +23,25 @@ export class BoardDataService {
     this.boards().length > 0 ? this.boards()[this.currentIdx()] : null,
   );
 
-  private saveBoards = effect(() =>
-    localStorage.setItem('boards', JSON.stringify(this.boards())),
-  );
+  private saveBoards = effect(() => {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('boards', JSON.stringify(this.boards()));
+    }
+  });
 
-  constructor(private boardHttp: BoardHttpService) {}
+  constructor(
+    private boardHttp: BoardHttpService,
+    @Inject(PLATFORM_ID) private platformId: object,
+  ) {}
 
   getBoards(): void {
-    const userBoards = JSON.parse(localStorage.getItem('boards') as string) as
-      | Board[]
-      | null;
+    let userBoards!: Board[] | null;
+
+    if (isPlatformBrowser(this.platformId)) {
+      userBoards = JSON.parse(localStorage.getItem('boards') as string) as
+        | Board[]
+        | null;
+    }
 
     if (userBoards) {
       this.boards.set(userBoards);
