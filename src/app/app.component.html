@@ -3,8 +3,8 @@
   class="root-container relative flex overflow-hidden"
 >
   <app-sidebar
-    [boards]="boards"
-    [activeBoard]="activeBoard"
+    [boards]="boards()"
+    [activeBoard]="activeBoard()"
     [opened]="isSidebarOpen"
     (selected)="selectBoard($event)"
     (enableDarkMode)="toggleDarkMode($event)"
@@ -20,8 +20,8 @@
   >
     <app-navbar
       [opened]="isSidebarOpen"
-      [activeBoard]="activeBoard"
-      [boards]="boards"
+      [activeBoard]="activeBoard()"
+      [boards]="boards()"
       [darkMode]="darkMode"
       (boardSelect)="selectBoard($event)"
       (boardAdd)="addBoard()"
@@ -32,8 +32,9 @@
 
     <app-project-board
       [darkMode]="darkMode"
-      [activeBoard]="activeBoard"
-      (columnAdd)="addBoard()"
+      [activeBoard]="activeBoard()"
+      (columnAdd)="editBoard()"
+      (boardEdit)="updateBoardAfterTaskReorder($event)"
       (taskUpdate)="updateTask($event)"
       (taskDeleteModal)="deleteTask($event)"
       (taskUpdateModal)="editTask($event)"

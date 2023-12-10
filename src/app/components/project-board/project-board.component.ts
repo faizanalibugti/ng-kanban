@@ -34,6 +34,7 @@ export class ProjectBoardComponent {
   @Input() activeBoard!: Board | null;
   @Input() darkMode = false;
   @Output() columnAdd = new EventEmitter<void>();
+  @Output() boardEdit = new EventEmitter<Board>();
   @Output() taskUpdate = new EventEmitter<{ task: Task; columnName: string }>();
   @Output() taskUpdateModal = new EventEmitter<Task>();
   @Output() taskDeleteModal = new EventEmitter<Task>();
@@ -41,19 +42,25 @@ export class ProjectBoardComponent {
   constructor(private dialog: MatDialog) {}
 
   drop(event: CdkDragDrop<Task[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
+    if (this.activeBoard) {
+      if (event.previousContainer === event.container) {
+        moveItemInArray(
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex,
+        );
+
+        this.boardEdit.emit(this.activeBoard);
+      } else {
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex,
+        );
+
+        this.boardEdit.emit(this.activeBoard);
+      }
     }
   }
 
