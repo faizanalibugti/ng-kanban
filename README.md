@@ -37,9 +37,19 @@ Customize your space! Hide or show the board sidebar with a flick. One click, an
 
 Toggle between light and dark modes to match your vibe. Day or night, we've got your back!
 
-### Bonus Feature: Drag and Drop 🚚
+### Drag and Drop 🚚
 
 Level up! Drag and drop tasks like a gaming pro. Change status, reorder - it's your canvas, paint it your way.
+
+## Local Storage Integration 📦
+
+Easily persist your Kanban board data locally using the power of `localStorage`. Never lose your work, even if you accidentally close the browser or refresh the page!
+
+✨ Seamless Integration: Your board data is automatically saved to local storage in real-time as you make changes.
+
+🔄 Auto-sync: Changes made on the board are automatically synchronized with local storage, ensuring your data is always up to date.
+
+🚀 Fast Retrieval: Retrieve your board data instantly upon returning to the app, providing a smooth and efficient user experience.
 
 ## Getting Started 🚀
 
